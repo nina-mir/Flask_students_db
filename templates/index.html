@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Students Currently in the Database  {% endblock %}</h1>
+    <h2 class="font-weight-light text-uppercase p-5 mb-2 bg-success text-white">{% block title %} All Records:  {% endblock %}</h2>
     <hr>
     {% for student in students %}
-        <h2>{{ student['fname'] + " " + student['lname'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID#:{{ student['id'] }}</h2>
+        <h3>{{ student['fname'] + " " + student['lname'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID#:{{ student['id'] }}</h3>
         <span class="badge badge-primary">{{ student['pronouns'] }}</span>
         <span class="badge badge-secondary">EMAIL: {{ student['email'] }}</span>
         <span class="badge badge-info">Mailing Address: {{ student['mail_add'] }}</span>

@@ -1,11 +1,21 @@
 import sqlite3
 
 from flask import Flask, render_template, request, url_for, flash, redirect
+from werkzeug.exceptions import abort
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+def get_student(student_id):
+    conn = get_db_connection()
+    post = conn.execute('SELECT * FROM students WHERE id = ?',
+                        (student_id,)).fetchone()
+    conn.close()
+    if post is None:
+        abort(404)
+    return post
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -42,6 +52,7 @@ def add():
             return redirect(url_for('index'))
 
     return render_template('add.html')
+
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=5000, debug=True)

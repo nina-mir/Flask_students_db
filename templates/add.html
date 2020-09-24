@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Add An Student Entry {% endblock %}</h1>
+<h2 class="font-weight-light text-uppercase p-5 mb-2 bg-success text-white">{% block title %} Add A New Entry {% endblock %}</h2>
 
 <form  method="post">
     <div class="form-group">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Add</button>
     </div>
 </form>
 {% endblock %}
