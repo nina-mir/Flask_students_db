@@ -53,6 +53,27 @@ def add():
 
     return render_template('add.html')
 
+@app.route('/search', methods=('GET', 'POST'))
+def search():
+    if request.method == 'POST':
+        
+        # fname = request.form['fname']
+        # lname = request.form['lname']
+        # student_id = request.form['id']
+
+        # if not (fname and lname and student_id) :
+        #     flash('ID, first and last names are all required!')
+        # else:
+        #     conn = get_db_connection()
+        #     conn.execute('INSERT INTO students (id, fname, lname, pronouns, mail_add, email, gpa) \
+        #                 VALUES (?, ?, ?, ?, ?, ?, ?)',
+        #                 (student_id, fname, lname, pronouns, mail_add, email, gpa ))
+        #     conn.commit()
+        #     conn.close()
+        return redirect(url_for('index'))
+
+    return render_template('search.html')
+
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=5000, debug=True)
