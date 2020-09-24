@@ -18,4 +18,12 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
 </form>
+{% for student in results %}
+        <h3>{{ student['fname'] + " " + student['lname'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID#:{{ student['id'] }}</h3>
+        <span class="badge badge-primary">{{ student['pronouns'] }}</span>
+        <span class="badge badge-secondary">EMAIL: {{ student['email'] }}</span>
+        <span class="badge badge-info">Mailing Address: {{ student['mail_add'] }}</span>
+        <span class="badge badge-warning">GPA: {{ student['gpa'] }}</span>
+        <hr>
+    {% endfor %}
 {% endblock %}

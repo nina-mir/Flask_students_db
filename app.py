@@ -8,14 +8,18 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-def get_student(student_id):
+def get_student_id(student_id):
     conn = get_db_connection()
-    post = conn.execute('SELECT * FROM students WHERE id = ?',
+    student = conn.execute('SELECT * FROM students WHERE id = ?',
                         (student_id,)).fetchone()
     conn.close()
-    if post is None:
+    if student is None:
         abort(404)
-    return post
+    return student
+
+
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -57,20 +61,29 @@ def add():
 def search():
     if request.method == 'POST':
         
-        # fname = request.form['fname']
-        # lname = request.form['lname']
-        # student_id = request.form['id']
+        fname = request.form['fname']
+        lname = request.form['lname']
+        student_id = request.form['id']
 
-        # if not (fname and lname and student_id) :
-        #     flash('ID, first and last names are all required!')
+        # if not (fname or lname or student_id) :
+        #     flash('Either ID, first name or last name is required!')
+        if fname:
+            conn = get_db_connection()
+            results = conn.execute('SELECT * FROM students WHERE fname = ?',
+                        (fname,)).fetchall()
+            conn.close()
+            if results is None:
+                abort(404)
+            print(len(results))
+            return render_template('search.html', results=results)
         # else:
         #     conn = get_db_connection()
         #     conn.execute('INSERT INTO students (id, fname, lname, pronouns, mail_add, email, gpa) \
         #                 VALUES (?, ?, ?, ?, ?, ?, ?)',
-        #                 (student_id, fname, lname, pronouns, mail_add, email, gpa ))
+        #                 (student_id, fname, lname))
         #     conn.commit()
         #     conn.close()
-        return redirect(url_for('index'))
+        #     return redirect(url_for('index'))
 
     return render_template('search.html')
 
