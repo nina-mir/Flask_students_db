@@ -65,25 +65,23 @@ def search():
         lname = request.form['lname']
         student_id = request.form['id']
 
-        # if not (fname or lname or student_id) :
-        #     flash('Either ID, first name or last name is required!')
-        if fname:
-            conn = get_db_connection()
-            results = conn.execute('SELECT * FROM students WHERE fname = ?',
-                        (fname,)).fetchall()
-            conn.close()
-            if results is None:
-                abort(404)
-            print(len(results))
-            return render_template('search.html', results=results)
-        # else:
-        #     conn = get_db_connection()
-        #     conn.execute('INSERT INTO students (id, fname, lname, pronouns, mail_add, email, gpa) \
-        #                 VALUES (?, ?, ?, ?, ?, ?, ?)',
-        #                 (student_id, fname, lname))
-        #     conn.commit()
-        #     conn.close()
-        #     return redirect(url_for('index'))
+        if not fname:
+            fname = '%'
+        if not lname:
+            lname = '%'
+        if not student_id:
+            student_id = '%'
+
+        conn = get_db_connection()
+        results = conn.execute('SELECT * FROM students WHERE fname Like ? AND lname Like ? AND id Like ?',
+                        (fname,lname, student_id)).fetchall()
+        conn.close()
+        # print(len(results))
+        if len(results) == 0:
+            flash('No such record found! Try something else!')
+            # abort(404)
+        print(len(results))
+        return render_template('search.html', results=results)
 
     return render_template('search.html')
 
